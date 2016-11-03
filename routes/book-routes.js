@@ -56,5 +56,15 @@ exports.like = function(req, res) {
      * where NUMBER is the number of likes converted to a string.
      */
 
-	 // TODO
+    Book.find({isbn:req.params.isbn}, function(err, book){
+        book[0].likes++;
+        
+        book[0].save(function(err){
+            if(err){
+                throw err;
+            }
+            res.send(JSON.stringify({"likes":book[0].likes.toString()}));
+        })
+    })
+
 };
